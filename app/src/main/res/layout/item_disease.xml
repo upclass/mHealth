@@ -1,7 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="#969292"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true"
+    app:contentPaddingBottom="2dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="所属科类："
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/disease_department"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="男科"/>
+        </LinearLayout>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/disease_place"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="男性生殖系统,阴茎,口"/>
+        <ImageView
+            android:id="@+id/disease_img"
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:src="@mipmap/ic_launcher"/>
+        <TextView
+            android:id="@+id/disease_description"
+            android:textSize="15sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="包皮过长，包皮口较小，虽能勉强上推露出阴茎头，但因诸种原因造成包皮紧勒在阴茎冠状沟处不能推下，形成嵌顿包茎包皮过长，包皮口较小，虽能勉强上推露出阴茎头，但因诸种原因造成包皮紧勒在阴茎冠状沟处不能推下，形成嵌顿包茎"/>
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
