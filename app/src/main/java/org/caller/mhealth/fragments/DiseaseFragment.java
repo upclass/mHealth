@@ -10,6 +10,7 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DiseaseFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Runnable {
+public class DiseaseFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Runnable, DiseaseAdapter.OnChildClickListener {
 
 
     private RecyclerView mRecyclerView;
@@ -43,12 +44,15 @@ public class DiseaseFragment extends BaseFragment implements SwipeRefreshLayout.
             switch (msg.what) {
                 case 1:
                     DiseaseList diseaseList = (DiseaseList) msg.obj;
-                    mList = diseaseList.getList();
+                    mList.clear();
+                    mList.addAll(diseaseList.getList());
+                    mRefreshLayout.setRefreshing(false);
                     mAdapter.notifyDataSetChanged();
                     break;
             }
         }
     };
+    private SwipeRefreshLayout mRefreshLayout;
 
     public DiseaseFragment() {
         // Required empty public constructor
@@ -70,10 +74,11 @@ public class DiseaseFragment extends BaseFragment implements SwipeRefreshLayout.
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new DiseaseAdapter(getContext(), mList);
+        mAdapter.setOnChildClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
 
-        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) ret.findViewById(R.id.disease_refresh_layout);
-        refreshLayout.setOnRefreshListener(this);
+        mRefreshLayout = (SwipeRefreshLayout) ret.findViewById(R.id.disease_refresh_layout);
+        mRefreshLayout.setOnRefreshListener(this);
         mUrl = HttpAPI.getListUrl(1, 20);
         new Thread(this).start();
         return ret;
@@ -94,5 +99,10 @@ public class DiseaseFragment extends BaseFragment implements SwipeRefreshLayout.
             message.obj = diseaseList;
             mHandler.sendMessage(message);
         }
+    }
+
+    @Override
+    public void onChildClick(RecyclerView parent, View view, int position) {
+
     }
 }
