@@ -30,4 +30,11 @@ public class HttpAPI {
         ret = builder.toString();
         return ret;
     }
+    public static String getOperationDetailUrl(String id) {
+        String ret = null;
+        StringBuilder builder = new StringBuilder("http://www.tngou.net/api/disease/show");
+        builder.append("?id=" + id);
+        ret = builder.toString();
+        return ret;
+    }
 }

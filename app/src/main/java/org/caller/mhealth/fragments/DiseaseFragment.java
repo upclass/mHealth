@@ -1,6 +1,7 @@
 package org.caller.mhealth.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 
+import org.caller.mhealth.OperationDetailActivity;
 import org.caller.mhealth.R;
 import org.caller.mhealth.adapters.DiseaseAdapter;
 import org.caller.mhealth.base.BaseFragment;
@@ -103,6 +105,9 @@ public class DiseaseFragment extends BaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void onChildClick(RecyclerView parent, View view, int position) {
-
+        Operation operation = mList.get(position);
+        Intent intent = new Intent(getContext(), OperationDetailActivity.class);
+        intent.putExtra("data", operation);
+        startActivity(intent);
     }
 }

@@ -1,5 +1,8 @@
 package org.caller.mhealth.entitys;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -7,7 +10,9 @@ import com.google.gson.annotations.SerializedName;
  */
 
 
-public class Operation {
+public class Operation implements Parcelable{
+    @SerializedName("id")
+    private long id;
     @SerializedName("name")
     private String name;//疾病名称
     @SerializedName("img")
@@ -52,6 +57,53 @@ public class Operation {
     private int rcount;//回复
     @SerializedName("fcount")
     private int fcount;//收藏
+
+
+    protected Operation(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        img = in.readString();
+        department = in.readString();
+        place = in.readString();
+        message = in.readString();
+        keywords = in.readString();
+        description = in.readString();
+        symptomtext = in.readString();
+        symptom = in.readString();
+        drug = in.readString();
+        drugtext = in.readString();
+        food = in.readString();
+        foodtext = in.readString();
+        causetext = in.readString();
+        checks = in.readString();
+        checktext = in.readString();
+        disease = in.readString();
+        diseasetext = in.readString();
+        caretext = in.readString();
+        count = in.readInt();
+        rcount = in.readInt();
+        fcount = in.readInt();
+    }
+
+    public static final Creator<Operation> CREATOR = new Creator<Operation>() {
+        @Override
+        public Operation createFromParcel(Parcel in) {
+            return new Operation(in);
+        }
+
+        @Override
+        public Operation[] newArray(int size) {
+            return new Operation[size];
+        }
+    };
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -227,5 +279,37 @@ public class Operation {
 
     public void setFcount(int fcount) {
         this.fcount = fcount;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(img);
+        dest.writeString(department);
+        dest.writeString(place);
+        dest.writeString(message);
+        dest.writeString(keywords);
+        dest.writeString(description);
+        dest.writeString(symptomtext);
+        dest.writeString(symptom);
+        dest.writeString(drug);
+        dest.writeString(drugtext);
+        dest.writeString(food);
+        dest.writeString(foodtext);
+        dest.writeString(causetext);
+        dest.writeString(checks);
+        dest.writeString(checktext);
+        dest.writeString(disease);
+        dest.writeString(diseasetext);
+        dest.writeString(caretext);
+        dest.writeInt(count);
+        dest.writeInt(rcount);
+        dest.writeInt(fcount);
     }
 }
