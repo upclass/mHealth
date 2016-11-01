@@ -1,6 +1,7 @@
 package org.caller.mhealth.fragments.diseasefragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,26 +23,19 @@ import org.caller.mhealth.entitys.DiseaseList;
 import org.caller.mhealth.entitys.Operation;
 import org.caller.mhealth.tools.HttpAPI;
 import org.caller.mhealth.tools.HttpTool;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CareFragment extends BaseFragment implements Runnable, View.OnClickListener {
+public class CareFragment extends BaseFragment implements View.OnClickListener {
 
     private String mUrl;
     private String mWebUrl;
-    private Handler mHandler = new Handler() {
-        @Override
-        public void dispatchMessage(Message msg) {
-            switch (msg.what) {
-                case 3:
-                    mWebUrl = (String) msg.obj;
-                    break;
-            }
-        }
-    };
+    private OnUrlGetListener mOnUrlGetListener;
     public CareFragment() {
         // Required empty public constructor
     }
@@ -51,6 +45,17 @@ public class CareFragment extends BaseFragment implements Runnable, View.OnClick
         return "预防护理";
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,8 +64,6 @@ public class CareFragment extends BaseFragment implements Runnable, View.OnClick
         View ret = inflater.inflate(R.layout.fragment_care, container, false);
         Operation operation = (Operation) getArguments().getParcelable("data");
         long id = operation.getId();
-        mUrl = HttpAPI.getOperationDetailUrl(Long.toString(id));
-        new Thread(this).start();
 
         init(ret, operation);
         return ret;
@@ -77,24 +80,10 @@ public class CareFragment extends BaseFragment implements Runnable, View.OnClick
         webView.loadData(html, "text/html;charset=UTF-8", null);
     }
 
-    @Override
-    public void run() {
-        if (mUrl != null) {
-            byte[] data = HttpTool.getByteResult(mUrl);
-            Message message = mHandler.obtainMessage(3);
-            try {
-                JSONObject obj = new JSONObject(new String(data));
-                String webUrl = (String) obj.opt("url");
-                if (webUrl != null) {
-                    message.obj = webUrl;
-                    mHandler.sendMessage(message);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+    @Subscribe
+    public void onWebUrlEvent(String webUrl) {
+        mWebUrl = webUrl;
     }
-
     @Override
     public void onClick(View v) {
         if (mWebUrl != null) {
@@ -102,5 +91,8 @@ public class CareFragment extends BaseFragment implements Runnable, View.OnClick
             intent.putExtra("url", mWebUrl);
             startActivity(intent);
         }
+    }
+    public interface OnUrlGetListener {
+        void onUrlGet(String url);
     }
 }

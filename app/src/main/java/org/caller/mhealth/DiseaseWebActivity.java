@@ -21,7 +21,6 @@ public class DiseaseWebActivity extends AppCompatActivity implements BrowserSupp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disease_web);
         String url = getIntent().getStringExtra("url");
-        Log.d("123456", "onCreate: " + url);
         if (url != null) {
             WebView webView = (WebView) findViewById(R.id.disease_web_webview);
             mProgressBar = (ProgressBar) findViewById(R.id.disease_detail_web_progress_bar);
