@@ -19,6 +19,8 @@
         </activity>
         <activity android:name=".OperationDetailActivity">
         </activity>
+        <activity android:name=".activities.CookShowActivity">
+        </activity>
     </application>
 
 </manifest>
