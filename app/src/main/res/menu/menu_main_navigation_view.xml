@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_home"
+            android:icon="@mipmap/ic_launcher"
+            android:title="首页"/>
+        <item
+            android:id="@+id/action_category"
+            android:icon="@mipmap/ic_launcher"
+            android:title="分类">
+            <menu>
+                <item
+                    android:id="@+id/action_disease"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="疾病信息"/>
+                <item
+                    android:id="@+id/action_book"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="健康图书"/>
+                <item
+                    android:id="@+id/action_cook"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="健康菜谱"/>
+            </menu>
+        </item>
+        <item
+            android:id="@+id/action_settings"
+            android:icon="@mipmap/ic_launcher"
+            android:title="设置"/>
+        <item
+            android:id="@+id/action_about"
+            android:icon="@mipmap/ic_launcher"
+            android:title="关于我们"/>
+    </group>
+</menu>
