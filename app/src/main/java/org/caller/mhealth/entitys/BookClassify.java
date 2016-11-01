@@ -2,69 +2,31 @@ package org.caller.mhealth.entitys;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
- * Created by wl on 2016/10/31.
+ * Created by Administrator on 2016/10/31.
  */
 
 public class BookClassify {
-    @SerializedName("description")
-    private String description;
-    @SerializedName("id")
-    private int id;
-    @SerializedName("keywords")
-    private String keywords;
-    @SerializedName("name")
-    private String name;
-    @SerializedName("seq")
-    private int seq;
-    @SerializedName("title")
-    private String title;
+    @SerializedName("status")
+    private boolean status;
+    @SerializedName("tngou")
+    private List<BookClassifyInfo>tngou;
 
-    public String getDescription() {
-        return description;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
-    public int getId() {
-        return id;
+    public List<BookClassifyInfo> getTngou() {
+        return tngou;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSeq() {
-        return seq;
-    }
-
-    public void setSeq(int seq) {
-        this.seq = seq;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTngou(List<BookClassifyInfo> tngou) {
+        this.tngou = tngou;
     }
 }

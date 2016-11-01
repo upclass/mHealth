@@ -64,6 +64,9 @@ public class DiseaseAdapter extends RecyclerView.Adapter implements View.OnClick
             myViewHolder.mTxtDepartment.setText(operation.getDepartment());
             myViewHolder.mTxtPlace.setText(operation.getPlace());
             myViewHolder.mTxtDescription.setText(operation.getDescription());
+            myViewHolder.mTxtCount.setText(Integer.toString(operation.getCount()));
+            myViewHolder.mTxtRcount.setText(Integer.toString(operation.getRcount()));
+            myViewHolder.mTxtFcount.setText(Integer.toString(operation.getFcount()));
             Glide.with(mContext)
                     .load("http://tnfs.tngou.net/img" + operation.getImg())
                     .into(myViewHolder.mImg);
@@ -92,6 +95,12 @@ public class DiseaseAdapter extends RecyclerView.Adapter implements View.OnClick
         private final TextView mTxtPlace;
         private final ImageView mImg;
         private final TextView mTxtDescription;
+        private final TextView mTxtCount;
+        private final ImageView mCountImg;
+        private final TextView mTxtRcount;
+        private final ImageView mRcountImg;
+        private final TextView mTxtFcount;
+        private final ImageView mFcountImg;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -99,6 +108,12 @@ public class DiseaseAdapter extends RecyclerView.Adapter implements View.OnClick
             mTxtPlace = ((TextView) itemView.findViewById(R.id.disease_place));
             mImg = ((ImageView) itemView.findViewById(R.id.disease_img));
             mTxtDescription = ((TextView) itemView.findViewById(R.id.disease_description));
+            mTxtCount = ((TextView) itemView.findViewById(R.id.disease_count));
+            mCountImg = ((ImageView) itemView.findViewById(R.id.disease_count_img));
+            mTxtRcount = ((TextView) itemView.findViewById(R.id.disease_rcount));
+            mRcountImg = ((ImageView) itemView.findViewById(R.id.disease_rcount_img));
+            mTxtFcount = ((TextView) itemView.findViewById(R.id.disease_fcount));
+            mFcountImg = ((ImageView) itemView.findViewById(R.id.disease_fcount_img));
         }
     }
     public interface OnChildClickListener {
