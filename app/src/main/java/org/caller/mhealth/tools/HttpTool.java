@@ -1,5 +1,9 @@
 package org.caller.mhealth.tools;
 
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -54,13 +58,32 @@ public final class HttpTool {
 
 
     public static String getStringResult(String url) {
-        String ret= null;
+        String ret = null;
         try {
-            ret = new String (getByteResult(url),"UTF-8");
+            if (getByteResult(url) != null) {
+                ret = new String(getByteResult(url), "UTF-8");
+            }
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return  ret;
+        return ret;
+    }
+
+    public static <T> T getJsonResult(String url,Class<T>tclass) {
+        T ret = null;
+        try {
+            if (getByteResult(url) != null) {
+                Gson gson=new Gson();
+                String temp=new String(getByteResult(url), "UTF-8");
+                T t = gson.fromJson(temp, tclass);
+                ret=t;
+            }
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
 }
