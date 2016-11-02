@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="#969292"
+    app:cardBackgroundColor="#facece"
     app:cardCornerRadius="5dp"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true"
@@ -36,19 +36,86 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="男性生殖系统,阴茎,口"/>
-        <ImageView
-            android:id="@+id/disease_img"
-            android:layout_width="250dp"
-            android:layout_height="200dp"
-            android:src="@mipmap/ic_launcher"/>
-        <TextView
-            android:id="@+id/disease_description"
-            android:textSize="15sp"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:text="包皮过长，包皮口较小，虽能勉强上推露出阴茎头，但因诸种原因造成包皮紧勒在阴茎冠状沟处不能推下，形成嵌顿包茎包皮过长，包皮口较小，虽能勉强上推露出阴茎头，但因诸种原因造成包皮紧勒在阴茎冠状沟处不能推下，形成嵌顿包茎"/>
+            android:layout_height="200dp"
+            android:weightSum="7"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp">
+            <ImageView
+                android:id="@+id/disease_img"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_launcher"/>
+            <TextView
+                android:id="@+id/disease_description"
+                android:textSize="15sp"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:paddingLeft="3dp"
+                android:text="包皮过长，包皮口较小，虽能勉强上推露出阴茎头，但因诸种原因造成包皮紧勒在阴茎冠状沟处不能推下，形成嵌顿包茎包皮过长，包皮口较小，虽能勉强上推露出阴茎头，但因诸种原因造成包皮紧勒在阴茎冠状沟处不能推下，形成嵌顿包茎"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="79653"
+                    android:id="@+id/disease_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/disease_count_img"
+                    android:src="@mipmap/count"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingLeft="5dp"
+                android:id="@+id/disease_linear_rcount"
+                android:layout_alignParentRight="true"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="62"
+                    android:id="@+id/disease_rcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/disease_rcount_img"
+                    android:src="@mipmap/rcount"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_toLeftOf="@+id/disease_linear_rcount"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/disease_fcount"
+                    android:text="253"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/disease_fcount_img"
+                    android:src="@mipmap/fcount"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
     </LinearLayout>
 
 
