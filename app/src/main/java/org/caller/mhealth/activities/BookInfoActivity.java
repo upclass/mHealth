@@ -1,16 +1,15 @@
-package org.caller.mhealth.activitys;
+package org.caller.mhealth.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-
 
 import org.caller.mhealth.R;
 import org.caller.mhealth.adapters.BookInfoAdapter;

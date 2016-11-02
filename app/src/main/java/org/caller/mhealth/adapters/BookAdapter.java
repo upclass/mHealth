@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import org.caller.mhealth.R;
-import org.caller.mhealth.activitys.BookInfoActivity;
+import org.caller.mhealth.activities.BookInfoActivity;
 import org.caller.mhealth.entitys.Book;
 import org.caller.mhealth.entitys.BookList;
 

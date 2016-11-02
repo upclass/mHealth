@@ -3,16 +3,14 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
-    signingConfigs {
-        config {
-            keyAlias 'key'
-            keyPassword '123456'
-            storeFile file('/home/xsm/mykey.jks')
-            storePassword '123456'
-        }
-    }
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+//    signingConfigs {
+//        config {
+//            keyAlias 'key'
+//            keyPassword '123456'
+//            storeFile file('/home/xsm/mykey.jks')
+//            storePassword '123456'
+//        }
+//    }
     defaultConfig {
         applicationId "org.caller.mhealth"
         minSdkVersion 10
@@ -20,17 +18,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.config
+//        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
         }
-        debug {
-            signingConfig signingConfigs.config
-        }
+//        debug {
+//            signingConfig signingConfigs.config
+//        }
     }
     lintOptions {
         checkReleaseBuilds false
