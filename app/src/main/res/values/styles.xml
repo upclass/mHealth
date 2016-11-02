@@ -1,0 +1,47 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Healthy_Book_Card">
+        <!--app:layout_columnWeight="1"-->
+        <!--app:cardUseCompatPadding="true"-->
+        <!--app:cardCornerRadius="3dp"-->
+        <!--app:cardElevation="2dp"-->
+        <!-- 所有第三方属性或者是app：开头的属性，不要包含app：前缀 -->
+        <item name="layout_columnWeight">1</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardCornerRadius">3dp</item>
+        <item name="cardElevation">2dp</item>
+    </style>
+
+
+    <style name="Healthy_Book_Icon">
+        <!-- (android:.+)="(.+)" -->
+        <!-- <item name="$1">$2</item> -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:adjustViewBounds">true</item>
+        <!--<item name="android:scaleType">centerCrop</item>-->
+    </style>
+
+    <style name="Healthy_Book_Title">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <declare-styleable name="MoreTextStyle">
+        <attr name="textSize" format="dimension"/>
+        <attr name="textColor" format="color"/>
+        <attr name="maxLine" format="integer" />
+        <attr name="text" format="string" />
+    </declare-styleable>
+
+</resources>
