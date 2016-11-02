@@ -6,19 +6,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 
-import org.caller.mhealth.OperationDetailActivity;
+import org.caller.mhealth.activities.OperationDetailActivity;
 import org.caller.mhealth.R;
 import org.caller.mhealth.adapters.DiseaseAdapter;
 import org.caller.mhealth.base.BaseFragment;

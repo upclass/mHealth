@@ -1,4 +1,4 @@
-package org.caller.mhealth;
+package org.caller.mhealth.activities;
 
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.caller.mhealth.R;
 import org.caller.mhealth.base.BaseFragment;
 import org.caller.mhealth.base.CommonFragmentPagerAdapter;
 import org.caller.mhealth.entitys.Operation;

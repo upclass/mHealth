@@ -4,29 +4,19 @@ package org.caller.mhealth.fragments.diseasefragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
-import com.google.gson.Gson;
-
-import org.caller.mhealth.DiseaseWebActivity;
+import org.caller.mhealth.activities.DiseaseWebActivity;
 import org.caller.mhealth.R;
 import org.caller.mhealth.base.BaseFragment;
-import org.caller.mhealth.entitys.DiseaseList;
 import org.caller.mhealth.entitys.Operation;
-import org.caller.mhealth.tools.HttpAPI;
-import org.caller.mhealth.tools.HttpTool;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.

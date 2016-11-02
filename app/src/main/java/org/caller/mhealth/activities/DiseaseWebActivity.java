@@ -1,4 +1,4 @@
-package org.caller.mhealth;
+package org.caller.mhealth.activities;
 
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import org.caller.mhealth.R;
 import org.caller.mhealth.webs.BrowserSupport;
 import org.caller.mhealth.webs.DiseaseWebViewChromeClient;
 
