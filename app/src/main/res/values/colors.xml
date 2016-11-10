@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="carViewbg">#0ff</color>
+    <color name="carViewbg">#00D8C9</color>
     <color name="colorPrimaryDark">#00D8C9</color>
     <color name="colorPrimary">#11e8d4</color>
     <color name="colorAccent">#FF4081</color>

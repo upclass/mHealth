@@ -12,6 +12,7 @@
     <include layout="@layout/main_content"/>
 
     <android.support.design.widget.NavigationView
+        android:background="@color/colorPrimary"
         android:id="@+id/main_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

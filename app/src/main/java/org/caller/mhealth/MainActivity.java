@@ -27,6 +27,7 @@ import com.squareup.picasso.Picasso;
 import org.caller.mhealth.activities.ActivityAbout;
 import org.caller.mhealth.activities.GetUserPhotoActivity;
 import org.caller.mhealth.activities.LocationActivity;
+import org.caller.mhealth.activities.LoginActivity;
 import org.caller.mhealth.base.BaseFragment;
 import org.caller.mhealth.base.CommonFragmentPagerAdapter;
 import org.caller.mhealth.entitys.MyUser;
@@ -79,6 +80,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             case  R.id.action_sport:
                                 Intent intent1=new Intent(MainActivity.this,LocationActivity.class);
                                 startActivity(intent1);
+                                break;
+                            case  R.id.action_loginout:
+                                SharedPreferences mf=getSharedPreferences("myuser",Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor=mf.edit();
+                                editor.putBoolean("isLogin",false);
+                                editor.commit();
+                                BmobUser.logOut();   //清除缓存用户对象
+                                ((MainApplication)getApplicationContext()).loginUser =new MyUser();
+                                finish();
+                                Intent intent3 = new Intent(MainActivity.this, LoginActivity.class);
+                                startActivity(intent3);
+                                break;
                         }
                         return false;
                     }

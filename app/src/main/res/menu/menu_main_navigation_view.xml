@@ -21,7 +21,7 @@
             android:icon="@mipmap/ic_launcher"
             android:title="关于我们"/>
         <item
-            android:id="@+id/action_settings"
+            android:id="@+id/action_loginout"
             android:icon="@mipmap/ic_launcher"
             android:title="退出登录"/>
     </group>
