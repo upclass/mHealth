@@ -37,11 +37,40 @@
         <item name="android:ellipsize">end</item>
     </style>
 
-    <declare-styleable name="MoreTextStyle">
-        <attr name="textSize" format="dimension"/>
-        <attr name="textColor" format="color"/>
-        <attr name="maxLine" format="integer" />
-        <attr name="text" format="string" />
-    </declare-styleable>
+    <!--<declare-styleable name="MoreTextStyle">-->
+        <!--<attr name="textSize" format="dimension"/>-->
+        <!--<attr name="textColor" format="color"/>-->
+        <!--<attr name="maxLine" format="integer" />-->
+        <!--<attr name="text" format="string" />-->
+    <!--</declare-styleable>-->
 
+
+    <style name="TitleNormal">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">21dp</item>
+    </style>
+
+    <style name="ToolbarNormal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <style name="MaterialDialogSheet" parent="@android:style/Theme.Dialog">
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:windowAnimationStyle">@style/MaterialDialogSheetAnimation</item>
+</style>
+
+    <style name="MaterialDialogSheetAnimation">
+        <item name="android:windowEnterAnimation">@anim/popup_show</item>
+        <item name="android:windowExitAnimation">@anim/popup_hide</item>
+    </style>
 </resources>

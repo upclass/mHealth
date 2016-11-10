@@ -1,49 +1,48 @@
 package org.caller.mhealth;
 
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.tencent.connect.UserInfo;
-import com.tencent.connect.common.Constants;
-import com.tencent.tauth.IUiListener;
-import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
 
-import org.caller.mhealth.activities.LoginActivity;
+import com.squareup.picasso.Picasso;
+
+import org.caller.mhealth.activities.ActivityAbout;
+import org.caller.mhealth.activities.GetUserPhotoActivity;
+import org.caller.mhealth.activities.LocationActivity;
 import org.caller.mhealth.base.BaseFragment;
 import org.caller.mhealth.base.CommonFragmentPagerAdapter;
+import org.caller.mhealth.entitys.MyUser;
 import org.caller.mhealth.fragments.BookFragment;
 import org.caller.mhealth.fragments.CookFragment;
-import org.caller.mhealth.fragments.DiseaseFragment;
-import org.caller.mhealth.tools.CircleTransform;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.caller.mhealth.widgets.CircleImg;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageView mLogin;
-    private TextView mUName;
-    private Context mContext;
+import cn.bmob.v3.BmobUser;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private CircleImg mLogin;
+    private Context mContext;
+    private View mView;
 
 
     @Override
@@ -51,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews(savedInstanceState);
+        setFrist();
+        setCurrentUser();
         mContext=this;
     }
 
@@ -69,12 +70,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        int id = item.getItemId();
+                        switch (id){
+                            case R.id.action_about:
+                                Intent intent=new Intent(MainActivity.this,ActivityAbout.class);
+                                startActivity(intent);
+                                break;
+                            case  R.id.action_sport:
+                                Intent intent1=new Intent(MainActivity.this,LocationActivity.class);
+                                startActivity(intent1);
+                        }
                         return false;
                     }
                 });
-        View view = mainNavigationView.getHeaderView(0);
-        mLogin = (ImageView) view.findViewById(R.id.iv_main_header_icon);
-        mUName= (TextView) view.findViewById(R.id.tv_account);
+        mView = mainNavigationView.getHeaderView(0);
+        mLogin = (CircleImg) mView.findViewById(R.id.iv_main_header_icon);
         mLogin.setOnClickListener(this);
     }
 
@@ -88,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private List<BaseFragment> fragments() {
         ArrayList<BaseFragment> fragments = new ArrayList<>();
-        fragments.add(new DiseaseFragment());
         fragments.add(new BookFragment());
         fragments.add(new CookFragment());
         return fragments;
@@ -100,75 +109,71 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivityForResult(intent, 10);
+
+        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.bottom_dialog, null);
+        TextView tv_take = (TextView) view.findViewById(R.id.tv_take);
+        TextView tv_select = (TextView) view.findViewById(R.id.tv_select);
+        final Dialog mBottomSheetDialog = new Dialog(MainActivity.this, R.style.MaterialDialogSheet);
+        mBottomSheetDialog.setContentView(view);
+        mBottomSheetDialog.setCancelable(true);
+        mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+        mBottomSheetDialog.show();
+        tv_take.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GetUserPhotoActivity.class);
+                intent.putExtra("isTake", true);
+                startActivityForResult(intent, 998);
+                mBottomSheetDialog.dismiss();
+            }
+        });
+
+        tv_select.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GetUserPhotoActivity.class);
+                intent.putExtra("isTake", false);
+                startActivityForResult(intent, 999);
+                mBottomSheetDialog.dismiss();
+            }
+        });
+    }
+
+
+
+    void setFrist(){
+        SharedPreferences mf=getSharedPreferences("myapp", Context.MODE_PRIVATE);
+        SharedPreferences mf1=getSharedPreferences("myuser", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit=mf.edit();
+        SharedPreferences.Editor edit1=mf1.edit();
+        edit.putBoolean("isFrist",false);
+        edit1.putBoolean("isLogin",true);
+        edit.commit();
+        edit1.commit();
+    }
+
+    void setCurrentUser(){
+        MyUser userInfo = BmobUser.getCurrentUser(MyUser.class);
+        ((MainApplication)getApplication()).setLoginUser(userInfo);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 10) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 1) {
             String result = data.getStringExtra("result");
-            if (result != null) {
-                showReturnMessage(result);
-            }
-            String info = data.getStringExtra("info");
-            if (info != null) {
-                try {
-                    Tencent mTencent = Tencent.createInstance("1105695257", this.getApplicationContext());
-                    JSONObject jsonObject = new JSONObject(info);
-                    String token = jsonObject.getString(Constants.PARAM_ACCESS_TOKEN);
-                    String expires = jsonObject.getString(Constants.PARAM_EXPIRES_IN);
-                    String openID = jsonObject.getString(Constants.PARAM_OPEN_ID);
-                    mTencent.setOpenId(openID);
-                    mTencent.setAccessToken(token, expires);
-                    UserInfo userInfo = new UserInfo(MainActivity.this, mTencent.getQQToken());
-                    IUiListener useInfoListener = new IUiListener() {
+            Snackbar.make(mView, result, Snackbar.LENGTH_SHORT)
+                    .setAction("提示", new View.OnClickListener() {
                         @Override
-                        public void onComplete(Object o) {
-                            JSONObject mInfo = (JSONObject) o;
-                            try {
-                                String userName=mInfo.getString("nickname");
-                                mUName.setText(userName);
-                                String userphoto=mInfo.getString("figureurl_qq_1");
-                                Glide.with(MainActivity.this).load(userphoto).centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
-                                        .transform(new CircleTransform(MainActivity.this))
-                                        .placeholder(R.mipmap.ic_launcher)
-                                        .crossFade()
-                                        .into(mLogin);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        public void onClick(View v) {
                         }
-
-                        @Override
-                        public void onError(UiError error) {
-
-                        }
-
-
-                        @Override
-                        public void onCancel() {
-                        }
-
-                    };
-                    userInfo.getUserInfo(useInfoListener);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+                    })
+                    .show();
+            String url = data.getStringExtra("photo");
+            Picasso.with(MainActivity.this).load(url).into(mLogin);
         }
     }
 
-    void showReturnMessage(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setMessage(message)
-                .setTitle("提示")
-                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        builder.create().show();
-    }
 }

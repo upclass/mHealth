@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/popup_window"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="bottom|center"
+              android:background="@android:color/white"
+              android:padding="10dp"
+              android:orientation="vertical">
+
+    <TextView
+        android:elevation="3dp"
+        android:id="@+id/tv_take"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/ic_takephoto"
+        android:drawablePadding="15dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="从照片中取"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:elevation="3dp"
+        android:id="@+id/tv_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/ic_ablum"
+        android:drawablePadding="15dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="从文件中取"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+
+</LinearLayout>
