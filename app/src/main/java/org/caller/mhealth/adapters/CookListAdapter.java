@@ -4,12 +4,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.FutureTarget;
 
 import org.caller.mhealth.R;
 import org.caller.mhealth.base.BaseRvAdapter;
 import org.caller.mhealth.entitys.CookBean;
 import org.caller.mhealth.model.CookModel;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -30,15 +33,32 @@ public class CookListAdapter extends BaseRvAdapter<CookBean> {
     @Override
     public void onBindViewHolder(VH holder, int position) {
         super.onBindViewHolder(holder, position);
-        CookBean cookBean = getItem(position);
+        final CookBean cookBean = getItem(position);
 
-        ImageView ivCookImg = holder.get(R.id.iv_cook_img);
+        final ImageView ivCookImg = holder.get(R.id.iv_cook_img);
+
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+                FutureTarget<File> future = Glide.with(ivCookImg.getContext())
+                        .load(CookModel.BASE_IMG_URL + cookBean.getImg())
+                        .downloadOnly(300,200);
+//                try {
+//                    File cacheFile = future.get();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        thread.start();
         Glide.with(ivCookImg.getContext())
                 .load(CookModel.BASE_IMG_URL + cookBean.getImg())
                 .override(300, 200)
                 .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(ivCookImg);
-
         TextView tvCookName = holder.get(R.id.tv_cook_name);
         tvCookName.setText(cookBean.getName());
 

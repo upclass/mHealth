@@ -3,6 +3,7 @@ package org.caller.mhealth.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,11 +18,19 @@ import org.caller.mhealth.activities.CookShowActivity;
 import org.caller.mhealth.adapters.CookListAdapter;
 import org.caller.mhealth.base.BaseFragment;
 import org.caller.mhealth.base.BaseRvAdapter;
+import org.caller.mhealth.entitys.BookList;
 import org.caller.mhealth.entitys.CookBean;
 import org.caller.mhealth.entitys.CookInfo;
 import org.caller.mhealth.model.CookModel;
 import org.caller.mhealth.model.CookModelImpl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +58,17 @@ public class CookFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cook, container, false);
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            List<CookBean> been = readFromSD();
+            if (been.size() != 0) {
+                mCookList.clear();
+                mCookList.addAll(been);
+                mAdapter.notifyDataSetChanged();
+            }
+            else updateCookList();
+        }
+        else
+            updateCookList();
         initViews(rootView);
         return rootView;
     }
@@ -88,16 +108,11 @@ public class CookFragment extends BaseFragment {
         getContext().startActivity(intent);
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        updateCookList();
-    }
 
     private void updateCookList() {
-        if (!mSrlCookList.isRefreshing()) {
-            mSrlCookList.setRefreshing(true);
-        }
+//        if (!mSrlCookList.isRefreshing()) {
+//            mSrlCookList.setRefreshing(true);
+//        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -108,13 +123,59 @@ public class CookFragment extends BaseFragment {
                         if (mSrlCookList.isRefreshing()) {
                             mSrlCookList.setRefreshing(false);
                         }
-                        List<CookBean> cookList = cookInfo.getCookList();
-                        mCookList.clear();
-                        mCookList.addAll(cookList);
-                        mAdapter.notifyDataSetChanged();
+                        if(cookInfo!=null){
+                            List<CookBean> cookList = cookInfo.getCookList();
+                            if(cookList!=null&&cookList.size()!=0){
+                                if(Environment.getExternalStorageDirectory().equals(Environment.MEDIA_MOUNTED)){
+                                    try {
+                                        deleteToSDCard("CookBean.txt");
+                                        saveToSDCard("CookBean.txt",cookList);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                mCookList.clear();
+                                mCookList.addAll(cookList);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        }
                     }
                 });
             }
         }).start();
+    }
+
+    public void saveToSDCard(String filename, List<CookBean> datas) throws Exception {
+        File file = new File(Environment.getExternalStorageDirectory(), filename);
+        FileOutputStream outStream = new FileOutputStream(file);
+        ObjectOutputStream objOut = new ObjectOutputStream(outStream);
+        objOut.writeObject(datas);
+        objOut.flush();
+        objOut.close();
+    }
+
+    public void deleteToSDCard(String filename) throws Exception {
+        File file = new File(Environment.getExternalStorageDirectory(), filename);
+        if (file.exists()) file.delete();
+    }
+
+    public List<CookBean> readFromSD() {
+        List<CookBean> ret = new ArrayList<>();
+        File file = new File(Environment.getExternalStorageDirectory(), "CookBean.txt");
+        FileInputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(file);
+            ObjectInputStream objIn = new ObjectInputStream(inputStream);
+            ret = ((List<CookBean>) objIn.readObject());
+            objIn.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 }

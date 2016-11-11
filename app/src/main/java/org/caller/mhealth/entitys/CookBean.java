@@ -2,11 +2,13 @@ package org.caller.mhealth.entitys;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Linked on 2016/11/1 0001.
  */
 
-public class CookBean {
+public class CookBean implements Serializable{
     @SerializedName("id")
     private int id;
     @SerializedName("name")

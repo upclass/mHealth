@@ -2,10 +2,12 @@ package org.caller.mhealth.entitys;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/11/1.
  */
-public class BookInfo {
+public class BookInfo implements Serializable{
     @SerializedName("book")
     private long book;
     @SerializedName("id")
@@ -16,6 +18,15 @@ public class BookInfo {
     private  long seq;
     @SerializedName("title")
     private String title;
+    private boolean isShow;
+
+    public boolean isShow() {
+        return isShow;
+    }
+
+    public void setShow(boolean show) {
+        isShow = show;
+    }
 
     public long getBook() {
         return book;
@@ -59,12 +70,12 @@ public class BookInfo {
 
     @Override
     public String toString() {
-        return "BookInfo{" +
-                "book=" + book +
-                ", id=" + id +
-                ", message='" + message + '\'' +
-                ", seq=" + seq +
-                ", title='" + title + '\'' +
-                '}';
+        return "\"BookInfo\":{" +
+                "\"book\":" + book +
+                ", \"id\":" + id +
+                ", \"message\":" +"\""+ message +"\""+
+                ", \"seq\":" + seq +
+                ", \"title\":" + "\""+title +"\""+
+                "}";
     }
 }

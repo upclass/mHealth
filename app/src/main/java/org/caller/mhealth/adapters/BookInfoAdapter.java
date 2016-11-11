@@ -55,45 +55,56 @@ public class BookInfoAdapter extends BaseAdapter {
         }
 
         ViewHolder tag = (ViewHolder) convertView.getTag();
-        tag.bindView(mitem.getList().get(position));
+        tag.bindView(this, mitem, position);
         return ret;
     }
+
 
     public static class ViewHolder {
         private TextView mTitle;
         private WebView mMessage;
-        private boolean flag;
 
         ViewHolder(View item) {
             mTitle = (TextView) item.findViewById(R.id.bookinfo_message);
             mMessage = (WebView) item.findViewById(R.id.bookinfo_web);
+        }
+
+        void bindView(final BookInfoAdapter adapter, final Book item, final int position) {
+            mTitle.setText(item.getList().get(position).getTitle());
+            mTitle.setTag(item.getList().get(position).getMessage());
+            if (item.getList().get(position).isShow()) {
+                mMessage.setVisibility(View.VISIBLE);
+                mTitle.setTextColor(Color.rgb(255, 0, 0));
+            } else {
+                mMessage.setVisibility(View.GONE);
+                mTitle.setTextColor(Color.rgb(0, 0, 0));
+            }
             mTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    boolean isShow = item.getList().get(position).isShow();
                     TextView v1 = (TextView) v;
-                    v1.setTextColor(Color.rgb(255,0,0));
-                    WebView mWebView=mMessage;
+//                    v1.setTextColor(Color.rgb(255, 0, 0));
+                    WebView mWebView = mMessage;
                     String tag = ((String) v.getTag());
                     String html = "<html><head><style>img {width: 100%}</style></head><body>" + tag + "</body></html>";
                     mWebView.loadData(html, "text/html;charset=UTF-8", null);
-                    if(!flag){
+                    if (!isShow) {
+                        v1.setTextColor(Color.rgb(255, 0, 0));
                         mWebView.setVisibility(View.VISIBLE);
-                        flag=true;
-                    }else{
+                        item.getList().get(position).setShow(true);
+                        for (int i = 0; i < item.getList().size(); i++) {
+                            if (i != position)
+                                item.getList().get(i).setShow(false);
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else {
                         mWebView.setVisibility(View.GONE);
-                        v1.setTextColor(Color.rgb(0,0,0));
-                        flag=false;
+                        v1.setTextColor(Color.rgb(0, 0, 0));
+                        item.getList().get(position).setShow(false);
                     }
-
                 }
             });
-        }
-
-        void bindView(BookInfo info) {
-            mTitle.setText(info.getTitle());
-            mTitle.setTag(info.getMessage());
-//            String html = "<html><head><style>img {width: 100%}</style></head><body>" +  info.getMessage() + "</body></html>";
-//            mMessage.loadData(html,"text/html;charset=UTF-8",null);
         }
     }
 }

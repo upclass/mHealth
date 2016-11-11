@@ -2,6 +2,7 @@ package org.caller.mhealth.entitys;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,29 +10,29 @@ import java.util.List;
  * Created by wl on 2016/10/31.
  */
 
-public class Book {
+public class Book implements Serializable{
     @SerializedName("author")
-    private  String author;
+    private String author;
     @SerializedName("bookclass")
-    private  int bookclass;
+    private int bookclass;
     @SerializedName("count")
     private long count;
     @SerializedName("fcount")
     private long fcount;
     @SerializedName("id")
-    private  long id;
+    private long id;
     @SerializedName("img")
     private String img;
     @SerializedName("name")
     private String name;
     @SerializedName("rcount")
-    private  long rcount;
+    private long rcount;
     @SerializedName("status")
     private boolean status;
     @SerializedName("time")
     private long time;
     @SerializedName("list")
-    private List<BookInfo>list;
+    private List<BookInfo> list;
     @SerializedName("summary")
     private String summary;
 
@@ -132,6 +133,24 @@ public class Book {
     }
 
     public Book() {
-        list=new ArrayList<>();
+        list = new ArrayList<>();
+    }
+
+
+    @Override
+    public String toString() {
+        return "{\"author\":" + '"'+author +'"' +
+                ", \"bookclass\":" + bookclass +
+                ",\" count\":" + count +
+                ",\"fcount\":" + fcount +
+                ", \"id\":" + id +
+                ",\"img\":" + "\"" + img + "\"" +
+                ",\"name\":" + "\"" + name + "\"" +
+                ",\"rcount\":" + rcount +
+                ",\"status\":" + status +
+                ",\"time\":" + time +
+                ", \"list\":" + list +
+                ",\"summary\":" + "\"" + summary + "\"" + "}"
+                ;
     }
 }

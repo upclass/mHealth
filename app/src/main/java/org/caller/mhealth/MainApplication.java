@@ -1,12 +1,10 @@
 package org.caller.mhealth;
 
 import android.app.Application;
-
 import org.caller.mhealth.entitys.MyUser;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobConfig;
-
 /**
  * Created by Administrator on 2016/11/10.
  */
@@ -26,7 +24,6 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         initBmobSDK();
-
     }
 
     private void initBmobSDK() {
@@ -42,5 +39,4 @@ public class MainApplication extends Application {
                 .build();
         Bmob.initialize(config);
     }
-
 }
