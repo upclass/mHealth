@@ -59,35 +59,23 @@ public class GetUserPhotoActivity extends TakePhotoActivity {
     public void takeSuccess(TResult result) {
         super.takeSuccess(result);
         mIntent.putExtra("result", "选择成功");
-        final MyUser loginUser = ((MainApplication) getApplication()).getLoginUser();
-
         String path = result.getImage().getPath();
-        final BmobFile bmobFile = new BmobFile(new File(path));
-        bmobFile.uploadblock(new UploadFileListener() {
+        mIntent.putExtra("path",path);
+        mProgressDialog.dismiss();
+        Thread thread=new Thread(new Runnable(){
 
             @Override
-            public void done(BmobException e) {
-                if (e == null) {
-                    final String url = bmobFile.getFileUrl();
-                    MyUser user = ((MainApplication) getApplication()).getLoginUser();
-                    user.setPhoto(url);
-                    user.update(user.getObjectId(), new UpdateListener() {
-                        @Override
-                        public void done(BmobException e) {
-                            if (e == null) {
-                                Log.i("bmob", "更新成功");
-                            } else {
-                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                            }
-                        }
-                    });
-                    mIntent.putExtra("photo", loginUser.getPhoto());
+            public void run() {
+                try {
+                    Thread.sleep(500);
                     finish();
-                } else {
-                    Toast.makeText(GetUserPhotoActivity.this, "上传文件成失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
+        thread.start();
+
     }
 
 
@@ -98,6 +86,9 @@ public class GetUserPhotoActivity extends TakePhotoActivity {
         mProgressDialog.show();
     }
 }
+
+
+
 
 
 

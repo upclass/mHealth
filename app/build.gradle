@@ -51,4 +51,5 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
     compile 'com.jph.takephoto:takephoto_library:3.0.4'
+    compile project(':IMKit')
 }

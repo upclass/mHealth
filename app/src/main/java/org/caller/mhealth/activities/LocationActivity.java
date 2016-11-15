@@ -1,5 +1,7 @@
 package org.caller.mhealth.activities;
 
+import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,8 +43,6 @@ public class LocationActivity extends AppCompatActivity implements BDLocationLis
     private PoiSearch mPoiSearch;
     private LocationClient mLocationClient;
     private Marker mSelfMarker;
-    private EditText mAdress;
-    private EditText mkeyword;
     private int load_Index = 0;
     private LatLng mPoint;
 
@@ -52,8 +52,6 @@ public class LocationActivity extends AppCompatActivity implements BDLocationLis
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_location);
         mMapView = (MapView) findViewById(R.id.bmapView);
-        mAdress = (EditText) findViewById(R.id.adress);
-        mkeyword = (EditText) findViewById(R.id.keyword);
         mBaiduMap = mMapView.getMap();
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         initLocationClient();
@@ -160,45 +158,49 @@ public class LocationActivity extends AppCompatActivity implements BDLocationLis
                 Log.d("BaiduLoc", "locType" + s);
                 break;
         }
+        search();
     }
 
-    public void btnSearch(View view) {
+    public void search() {
         mBaiduMap.clear();
-        String adress = mAdress.getText().toString();
-        String keyword = mkeyword.getText().toString();
-        if (adress.equals("") || keyword.equals("")) {
-            Toast.makeText(LocationActivity.this, "填全信息", Toast.LENGTH_SHORT).show();
-        } else {
-            PoiNearbySearchOption option1 = new PoiNearbySearchOption();
-            option1.location(mPoint).keyword(keyword).pageCapacity(10).pageNum(load_Index).sortType(PoiSortType.distance_from_near_to_far).radius(50000);
-            mPoiSearch.searchNearby(option1);
-        }
-
+        PoiNearbySearchOption option1 = new PoiNearbySearchOption();
+        option1.location(mPoint).keyword("运动场").pageCapacity(10).pageNum(load_Index).sortType(PoiSortType.distance_from_near_to_far).radius(50000);
+        mPoiSearch.searchNearby(option1);
     }
 
 
     public void btnPrevious(View view) {
         if (load_Index >= 1) {
             load_Index--;
-            btnSearch(null);
+            search();
         }
     }
 
     public void btnNext(View view) {
         load_Index++;
-        btnSearch(null);
+        search();
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Bundle info = marker.getExtraInfo();
+        final Bundle info = marker.getExtraInfo();
         PoiInfo poiInfo = null;
         if (info != null) {
             poiInfo = (PoiInfo) info.get("poiInfo");
         }
         if (poiInfo != null) {
-            String address = poiInfo.address;
-            Toast.makeText(LocationActivity.this, address, Toast.LENGTH_SHORT).show();
+            final String address = poiInfo.address;
+            Snackbar.make(mMapView, address, Snackbar.LENGTH_LONG).
+                    setAction("点击进入社区", new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent=new Intent(LocationActivity.this,CommentActivity.class);
+                            intent.putExtra("address",address);
+                            startActivity(intent);
+                        }
+                    }).
+                    show();
         }
         return true;
     }

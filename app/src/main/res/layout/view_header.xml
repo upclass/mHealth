@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    >
+
+
+    <!--头像显示区域-->
+    <RelativeLayout
+        android:id="@+id/left"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        >
+
+        <!-- 圆形头像 -->
+        <org.caller.mhealth.widgets.CircleImg
+            android:id="@+id/avatarImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="60dp"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/logo"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/right"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:id="@+id/iv_menu"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/comment_add_normal"
+
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/middle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/right"
+        android:layout_toRightOf="@id/left"
+        >
+    </RelativeLayout>
+
+
+</RelativeLayout>
